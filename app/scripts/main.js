@@ -1,48 +1,137 @@
-var Service = Backbone.Model.extend({
+var all_problems = new Problems();
+// var all_problems = new Problems();
 
-  defaults: {
-    title: 'My service',
-    type: '',
-    price: 100,
-    wanted: true
-  },
-
-  initialize: function(){
-    var n = this.get('type');
-    console.log(n + ' has been added')
-  }
-});
-
-var ServiceList = Backbone.Collection.extend ({
-
-  model: Service,
-  url: 'http://tiy-atl-fe-server.herokuapp.com/collections/maxservice'
-});
-
-var my_services = new ServiceList ();
-
-$('#main').on('submit', function(e){
-  e.preventDefault();
-
-  var service_name = $('#order').val();
-
-
-    var services = new ServiceList({
-          type: service_name
-        // type: 'web development', price: 200, wanted: false,
-        // type: 'web design', price: 250,
-        // type: 'r&d', price: 100,
-        // type: 'bullshitting', price: 10
-        // Add more here
-    });
-
-
-  my_services.add(services);
-
-//  services.save();
-
+var addProblem = function (event) {
+  event.preventDefault();
+  var myprob = new Problem({
+    name: $('#name').val(),
+    problem: $('#problem').val(),
+    count: $('ul li').length + 1
+  });
+  console.log(myprob);
+  all_problems.add(myprob);
+  myprob.save();
+  $('.counter').html(myprob.attributes.count);
   $(this)[0].reset();
+
+};
+
+$('#problemSubmit').on('submit', addProblem);
+
+all_problems.fetch().done(function(){
+  var problemsview = new ProblemsView({
+    collection: all_problems
+  });
 });
+
+
+////////////////////////////////////
+//add the note click function
+// $('#sendMessage').on('submit', function (event){
+//   event.preventDefault(); //wont refresh page
+//     //Grab the Task Value
+//
+//   var self = this;
+//
+//   //what is included in the li
+//   contents = $('#text').val() + '<button class="remove"><img class="removeX" src="../images/cross5.png"/></button>';
+//
+//   task = new ToDo({
+//     task: contents
+//   });
+//
+//   //if no value is added to the input field, the submit won't work
+//   if($('#text').val() === ''){
+//     return false;
+//   }
+//
+//   //Creating the POST request to the server
+//   $.ajax({
+//     type: 'POST',  //post request to the server
+//     url: my_server, // what url it will be
+//     data: task  //the data we are sending
+//   }).done( function (data){
+//
+//     // Add to my todo_list
+//     todo_list.push(data);
+//
+//     // Show our task on the page and appear at the top of the list
+//     $('#todoList').prepend(rendered(data));
+//
+//     // Reset my form
+//     $(self)[0].reset();
+//
+//
+//     //creates the total counter
+//     var q = $('#todoList li').length;
+//     $('#counter').html(q);
+//   });
+//
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////
+// var Service = Backbone.Model.extend({
+//
+//   defaults: {
+//     title: 'My service',
+//     type: '',
+//     price: 100,
+//     wanted: true
+//   },
+//
+//   initialize: function(){
+//     var n = this.get('type');
+//     console.log(n + ' has been added')
+//   }
+// });
+//
+// var ServiceList = Backbone.Collection.extend ({
+//
+//   model: Service,
+//   url: 'http://tiy-atl-fe-server.herokuapp.com/collections/maxservice'
+// });
+//
+// var my_services = new ServiceList ();
+//
+// $('#main').on('submit', function(e){
+//   e.preventDefault();
+//
+//   var service_name = $('#order').val();
+//
+//
+//     var services = new ServiceList({
+//           type: service_name
+//         // type: 'web development', price: 200, wanted: false,
+//         // type: 'web design', price: 250,
+//         // type: 'r&d', price: 100,
+//         // type: 'bullshitting', price: 10
+//         // Add more here
+//     });
+//
+//
+//   my_services.add(services);
+//
+// //  services.save();
+//
+//   $(this)[0].reset();
+// });
 
 ///////////////////////////////////////
 // var Student = Backbone.Model.extend ({

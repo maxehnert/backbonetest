@@ -24,21 +24,22 @@
   <body>
 
     <div class="container">
-    <form id="main" >
-            <h1>My Services</h1>
-
-            <ul id="services">
-                <!-- The services will be inserted here -->
-            </ul>
-
-            <p id="total">total: <span>$0</span></p>
-
-            <input type="text" id="order" placeholder="Enter the service you want" />
-            <button type='submit'>Order</button>
-        </form>
-
+      <div class="currentNumber">
+          <p>Current Ticket</p>
+          <p class="counter"></p>
+      </div>
+      <h1>Wait List</h1>
+      <form id="problemSubmit">
+        <input type="text" id="name" placeholder="Enter your name"/>
+        <textarea type="text" id="problem" placeholder="Enter your problem"></textarea>
+        <button type="submit">Add Student</button>
+      </form>
+      <ul id="list"></ul>
     </div>
 
+    <script type="text/template" id="currentProblem">
+      <li>Name: <%=name%>, Problem: <%=problem%>, count: <%=count%></li>
+    </script>
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
     <script src="../bower_components/jquery/dist/jquery.js"></script>
@@ -49,6 +50,9 @@
     <!-- endbuild -->
 
         <!-- build:js scripts/main.js -->
+          <script src="scripts/models/feelings_model.js" src="scripts/main.js"></script>
+        <script src="scripts/collections/feelings_collection.js"></script>
+<script src="scripts/views/feelings_views.js"></script>
         <script src="scripts/main.js"></script>
         <!-- endbuild -->
 </body>
